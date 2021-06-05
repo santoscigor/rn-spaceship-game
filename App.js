@@ -6,30 +6,32 @@ import { styles } from './src/styles';
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
-let ovniTimerId;
+const ovniHeight = 32;
+let gameTimerId;
 
 export default function App() {
-  const [ovniX, setOvniX] = useState(0);
+  const [ovniX, setOvniX] = useState(Math.random() * screenWidth);
+  const [ovniY, setOvniY] = useState(screenHeight);
 
   useEffect(() => {
-    if (ovniX <= 300) {
-      ovniTimerId = setInterval(() => {
-        setOvniX(ovniX => ovniX + 100)
-      }, 2 * 150)
-    } else if (ovniX > 100) {
-      ovniTimerId = setInterval(() => {
-        setOvniX(ovniX => ovniX - 300)
-      }, 2 * 150)
+    if(ovniY > -ovniHeight){
+      gameTimerId = setInterval(() => {
+        setOvniY(ovniY => ovniY - 15)
+      }, 3 * 10)
+      return () => {
+        clearInterval(gameTimerId);
+      }
+    } else {
+      setOvniX(Math.random() * screenWidth);
+      setOvniY(screenHeight);
     }
-    return () => {
-      clearInterval(ovniTimerId);
-    }
-  }, [ovniX])
+  }, [ovniY])
 
   return (
     <View style={styles.container}>
       <Ovni 
         ovniX={ovniX}
+        ovniY={ovniY}
       />
       <Spaceship
         left={175}
