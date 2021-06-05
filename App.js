@@ -9,7 +9,9 @@ console.disableYellowBox = true;
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 const ovniHeight = 32;
-let gameTimerId;
+const ovniWidth = 64;
+const spaceshipY = 0;
+let ovniTimerId;
 
 export default function App() {
   const [ovniX, setOvniX] = useState(Math.random() * screenWidth);
@@ -29,13 +31,14 @@ export default function App() {
 
   }, [cursorX]);
 
+  //comportamento do ovni
   useEffect(() => {
     if(ovniY > -ovniHeight){
-      gameTimerId = setInterval(() => {
+      ovniTimerId = setInterval(() => {
         setOvniY(ovniY => ovniY - 15)
-      }, 3 * 10)
+      }, 3 * 10);
       return () => {
-        clearInterval(gameTimerId);
+        clearInterval(ovniTimerId);
       }
     } else {
       setOvniX(Math.random() * screenWidth);
@@ -55,7 +58,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>{left}</Text>
+      <Text style={{top: 20, color: 'white', paddingLeft: 20}}>{left}</Text>
       <Ovni 
         ovniX={ovniX}
         ovniY={ovniY}
