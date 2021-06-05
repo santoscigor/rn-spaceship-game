@@ -41,7 +41,17 @@ export default function App() {
       setOvniX(Math.random() * screenWidth);
       setOvniY(screenHeight);
     }
-  }, [ovniY])
+  }, [ovniY]);
+
+  useEffect(() => {
+    if(ovniY === spaceshipY){
+      if( left > (ovniX + ovniWidth/2) && left < (ovniX - ovniWidth/2) ) {
+        clearInterval(ovniTimerId);
+        clearInterval(intervalID);
+        console.log('game over');
+      }
+    }
+  }, [])
 
   return (
     <View style={styles.container}>
