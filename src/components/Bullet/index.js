@@ -11,8 +11,8 @@ class Spaceship extends Component {
     render() {
         return (
             <Image
-                style={{ position: 'absolute', bottom: this.props.bottom, left: this.props.left }}
-                source={require('../../assets/images/nave.png')}
+                style={{ position: 'absolute', bottom: this.props.bottom, left: this.props.left, width: this.props.width, height: this.props.height }}
+                source={require('../../assets/images/bullet.png')}
             />
         );
     }
