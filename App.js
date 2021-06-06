@@ -10,17 +10,24 @@ const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 const ovniHeight = 32;
 const ovniWidth = 64;
-const spaceshipY = 0;
+const spaceshipY = 100;
+const spaceshipWidth = 48;
+const spaceshipHeight = 36;
 let ovniTimerId;
 
 export default function App() {
   const [ovniX, setOvniX] = useState(Math.random() * screenWidth);
   const [ovniY, setOvniY] = useState(screenHeight);
-  const [left, setLeft] = useState(screenWidth/2);
+  const [left, setLeft] = useState(screenWidth / 2);
   const [cursorX, setCursorX] = useState(0);
   const maxLeft = Dimensions.get('window').width - 36;
+  var intervalID, checkCollisionInterval
 
-  var intervalID
+  function resetOvni() {
+    setOvniX(Math.random() * (screenWidth - 36));
+    setOvniY(screenHeight);
+  }
+
   useEffect(() => {
     if (cursorX != 0) {
       intervalID = setInterval(() => {
@@ -33,49 +40,65 @@ export default function App() {
 
   //comportamento do ovni
   useEffect(() => {
-    if(ovniY > -ovniHeight){
+    let colidiu = false
+    if ((ovniY + 10) < (spaceshipY + spaceshipWidth) && (ovniY + 10) > spaceshipY) {
+      // Checa colisão com o lado esquerdo
+      if (left > (ovniX) && left < (ovniX + ovniWidth)) {
+        colidiu = true;
+      }
+      // Checa colisão com o lado direito
+      else if ((left + spaceshipWidth) > (ovniX) && (left + spaceshipWidth) < (ovniX + ovniWidth)) {
+        colidiu = true;
+      }
+      if (colidiu) {
+        console.log('Game Over');
+        resetOvni();
+        setOvniY(screenHeight);
+        clearInterval(ovniTimerId);
+        clearInterval(intervalID);
+        clearInterval(checkCollisionInterval);
+      }
+    }
+    if (ovniY > -ovniHeight) {
       ovniTimerId = setInterval(() => {
         setOvniY(ovniY => ovniY - 15)
       }, 3 * 10);
       return () => {
         clearInterval(ovniTimerId);
       }
-    } else {
-      setOvniX(Math.random() * screenWidth);
-      setOvniY(screenHeight);
+    }
+    else {
+      console.log('asd');
+      resetOvni()
     }
   }, [ovniY]);
 
   useEffect(() => {
-    if(ovniY === spaceshipY){
-      if( left > (ovniX + ovniWidth/2) && left < (ovniX - ovniWidth/2) ) {
-        clearInterval(ovniTimerId);
-        clearInterval(intervalID);
-        console.log('game over');
-      }
-    }
+    checkCollisionInterval = setInterval(() => {
+    }, 100)
   }, [])
 
   return (
     <View style={styles.container}>
-      <Text style={{top: 20, color: 'white', paddingLeft: 20}}>{left}</Text>
-      <Ovni 
+      <Text style={{ top: 20, color: 'white', paddingLeft: 20 }}>{left}</Text>
+      <Ovni
         ovniX={ovniX}
         ovniY={ovniY}
       />
       <AxisPad
-        wrapperStyle={{ position: 'absolute', bottom: 0, left: (screenWidth/2 - 40) }}
+        wrapperStyle={{ position: 'absolute', bottom: 0, left: (screenWidth / 2 - 40) }}
         resetOnRelease={true}
         autoCenter={false}
         lockY
         size={80}
         handlerSize={40}
         onValue={({ x, y }) => {
-          setCursorX(cursorX => x);
+          setCursorX(x);
         }} />
 
       <Spaceship
         left={left}
+        bottom={spaceshipY}
       />
     </View>
   );
