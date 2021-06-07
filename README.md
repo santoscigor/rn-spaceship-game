@@ -3,7 +3,7 @@
 ## Contributors
 
 - Igor Santos
-- 
+- José Espinheira (jose.espinheira@ufba.br) 
 - 
 - 
 - 
