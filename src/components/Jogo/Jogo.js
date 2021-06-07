@@ -13,7 +13,6 @@ const ovniHeight = 32;
 const ovniWidth = 64;
 const spaceshipY = 100;
 const spaceshipWidth = 48;
-const spaceshipHeight = 36;
 let ovniTimerId;
 
 export default function Jogo({ route, navigation }) {
@@ -91,7 +90,7 @@ export default function Jogo({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={{ top: 20, color: 'white', paddingLeft: 20 }}>{left}</Text>
+      <Text style={{ top: 20, color: 'white', paddingLeft: 20 }}>{`Vidas: ${vida}`}</Text>
       <Ovni
         ovniX={ovniX}
         ovniY={ovniY}
