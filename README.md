@@ -6,7 +6,6 @@
 - José Espinheira (jose.espinheira@ufba.br) 
 - 
 - 
-- 
 
 ## To contribute
 
