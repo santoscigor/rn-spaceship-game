@@ -18,3 +18,9 @@
 
 1. Install dependences with `npm install`
 2. Run project with `npm run start` or `npm run web`, `npm run android` and `npm run ios`
+
+## Preview
+
+![Home](https://cdn.discordapp.com/attachments/845388670390370344/851924585149890600/1.jpg)
+![Game](https://cdn.discordapp.com/attachments/845388670390370344/851924600555831296/2.jpg)
+![Game Over](https://cdn.discordapp.com/attachments/845388670390370344/851924613747179540/3.jpg)
